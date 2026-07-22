@@ -35,25 +35,22 @@ export async function POST(req: Request) {
                   text: `
 사진 속 재활용품을 분석해주세요.
 
-반드시 아래 목록 중 하나만 category 값으로 사용하세요.
+반드시 아래 중 하나만 JSON으로 반환하세요.
 
-가능한 분류:
-- PET
-- PP
-- HDPE
-- LDPE
-- 폐지
-- 알루미늄 캔
-- 지원하지 않는 품목
+PET
+PP
+HDPE
+LDPE
+폐지
+알루미늄 캔
+지원하지 않는 품목
 
-다른 표현(페트병, 플라스틱, 캔, 종이 등)은 사용하지 마세요.
-
-반드시 JSON 형식으로만 답해주세요.
-
-예시:
+답변 형식:
 {
- "category":"PET"
+ "category":"PP"
 }
+
+설명하지 말고 JSON만 출력하세요.
 `,
                 },
                 {
@@ -77,10 +74,9 @@ export async function POST(req: Request) {
     const text =
       data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-return NextResponse.json({
-  result: text,
-  debug: JSON.stringify(data),
-});
+    return NextResponse.json({
+      result: text,
+    });
 
   } catch (error) {
     return NextResponse.json(
