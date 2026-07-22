@@ -13,30 +13,37 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
     });
 
     if (!res.ok) {
-      throw new Error("ANALYSIS_FAILED");
+      throw new Error("API_ERROR");
     }
 
     const data = await res.json();
 
-    const text = data.result;
-    console.log("GEMINI RESPONSE:", text);
-
-    // Gemini 응답에서 JSON 추출
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-
-    if (!jsonMatch) {
-      throw new Error("ANALYSIS_FAILED");
+    if (!data.result) {
+      throw new Error("NO_GEMINI_RESPONSE");
     }
 
-    const result = JSON.parse(jsonMatch[0]);
+    let text = data.result;
 
-const category = result.category as keyof typeof CATEGORY_ICONS;
+    text = text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    const result = JSON.parse(text);
+
+    const category = result.category;
+
+    if (!CATEGORY_ICONS[category]) {
+      throw new Error("UNKNOWN_CATEGORY");
+    }
+
     return {
       category,
       icon: CATEGORY_ICONS[category],
     };
 
   } catch (error) {
+    console.error("VISION ERROR:", error);
     throw new Error("ANALYSIS_FAILED");
   }
 }
