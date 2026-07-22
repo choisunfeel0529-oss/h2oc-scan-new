@@ -23,7 +23,7 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
     }
 
     let text = data.result;
-
+console.log("GEMINI RAW RESPONSE:", text);
     text = text
       .replace(/```json/g, "")
       .replace(/```/g, "")
