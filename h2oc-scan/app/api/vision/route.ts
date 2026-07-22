@@ -77,10 +77,10 @@ export async function POST(req: Request) {
     const text =
       data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    return NextResponse.json({
-      result: text,
-      debug: data,
-    });
+return NextResponse.json({
+  result: text,
+  debug: JSON.stringify(data),
+});
 
   } catch (error) {
     return NextResponse.json(
