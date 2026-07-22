@@ -19,6 +19,7 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
     const data = await res.json();
 
     const text = data.result;
+    console.log("GEMINI RESPONSE:", text);
 
     // Gemini 응답에서 JSON 추출
     const jsonMatch = text.match(/\{[\s\S]*\}/);
