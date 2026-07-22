@@ -31,7 +31,7 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     const result = JSON.parse(text);
 
-    const category = result.category;
+  const category = result.category as keyof typeof CATEGORY_ICONS;
 
     if (!CATEGORY_ICONS[category]) {
       throw new Error("UNKNOWN_CATEGORY");
