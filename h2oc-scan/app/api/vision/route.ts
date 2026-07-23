@@ -74,9 +74,10 @@ LDPE
     const text =
       data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    return NextResponse.json({
-      result: text,
-    });
+return NextResponse.json({
+  result: text,
+  debug: data,
+});
 
   } catch (error) {
     return NextResponse.json(
