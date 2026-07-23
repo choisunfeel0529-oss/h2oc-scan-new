@@ -68,9 +68,11 @@ LDPE
         }),
       }
     );
+console.log("GEMINI REQUEST START");
 
-    const data = await response.json();
+const data = await response.json();
 
+console.log("GEMINI RESPONSE DATA:", data);
     const text =
       data.candidates?.[0]?.content?.parts?.[0]?.text;
 
