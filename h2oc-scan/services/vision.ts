@@ -20,15 +20,17 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     console.log("ROBOFLOW DATA:", data);
 
-const prediction =
-  data.result?.predictions?.[0] ??
-  data.predictions?.[0];
+    const prediction =
+      data.result?.predictions?.[0] ??
+      data.predictions?.[0];
+
     console.log("PREDICTION:", prediction);
+
     if (!prediction) {
       throw new Error("NO_PREDICTION");
     }
 
-    let category = prediction.class;
+    let category = String(prediction.class);
 
     // Roboflow 클래스명 → 기존 앱 클래스명 변환
     if (category === "ALU") {
@@ -37,6 +39,22 @@ const prediction =
 
     if (category === "GLASS") {
       category = "지원하지 않는 품목";
+    }
+
+    if (category === "PET") {
+      category = "PET";
+    }
+
+    if (category === "PP") {
+      category = "PP";
+    }
+
+    if (category === "HDPE") {
+      category = "HDPE";
+    }
+
+    if (category === "LDPE") {
+      category = "LDPE";
     }
 
     category = category as keyof typeof CATEGORY_ICONS;
