@@ -32,7 +32,6 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     let category = String(prediction.class);
 
-    // Roboflow 클래스명 → 기존 앱 클래스명 변환
     if (category === "ALU") {
       category = "알루미늄 캔";
     }
@@ -41,31 +40,16 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
       category = "지원하지 않는 품목";
     }
 
-    if (category === "PET") {
-      category = "PET";
-    }
+    const finalCategory =
+      category as keyof typeof CATEGORY_ICONS;
 
-    if (category === "PP") {
-      category = "PP";
-    }
-
-    if (category === "HDPE") {
-      category = "HDPE";
-    }
-
-    if (category === "LDPE") {
-      category = "LDPE";
-    }
-
-    category = category as keyof typeof CATEGORY_ICONS;
-
-    if (!CATEGORY_ICONS[category]) {
+    if (!CATEGORY_ICONS[finalCategory]) {
       throw new Error("UNKNOWN_CATEGORY");
     }
 
     return {
-      category,
-      icon: CATEGORY_ICONS[category],
+      category: finalCategory,
+      icon: CATEGORY_ICONS[finalCategory],
     };
 
   } catch (error) {
