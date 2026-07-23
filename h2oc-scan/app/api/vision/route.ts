@@ -11,77 +11,53 @@ export async function POST(req: Request) {
       );
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.ROBOFLOW_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json(
-        { error: "API KEY 없음" },
+        { error: "Roboflow API KEY 없음" },
         { status: 500 }
       );
     }
 
-const response = await fetch(
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+
+    const response = await fetch(
+      "https://serverless.roboflow.com/s-workspace-kzb59/workflows/garbage-ng351-k2ppi",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: `
-사진 속 재활용품을 분석해주세요.
-
-반드시 아래 중 하나만 JSON으로 반환하세요.
-
-PET
-PP
-HDPE
-LDPE
-폐지
-알루미늄 캔
-지원하지 않는 품목
-
-답변 형식:
-{
- "category":"PP"
-}
-
-설명하지 말고 JSON만 출력하세요.
-`,
-                },
-                {
-                  inline_data: {
-                    mime_type: "image/jpeg",
-                    data: image.replace(
-                      /^data:image\/\w+;base64,/,
-                      ""
-                    ),
-                  },
-                },
-              ],
+          api_key: apiKey,
+          inputs: {
+            image: {
+              type: "base64",
+              value: image.replace(
+                /^data:image\/\w+;base64,/,
+                ""
+              ),
             },
-          ],
+          },
         }),
       }
     );
-console.log("GEMINI REQUEST START");
 
-const data = await response.json();
 
-console.log("GEMINI RESPONSE DATA:", data);
-    const text =
-      data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const data = await response.json();
 
-return NextResponse.json({
-  result: text,
-  debug: data,
-});
+    console.log("ROBOFLOW RESPONSE:", data);
+
+
+    return NextResponse.json({
+      result: data,
+    });
+
 
   } catch (error) {
+
+    console.error(error);
+
     return NextResponse.json(
       { error: "분석 실패" },
       { status: 500 }
