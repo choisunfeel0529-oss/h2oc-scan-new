@@ -18,20 +18,27 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     const data = await res.json();
 
-    if (!data.result) {
-      throw new Error("NO_GEMINI_RESPONSE");
+    console.log("ROBOFLOW DATA:", data);
+
+    const prediction =
+      data.result?.predictions?.[0];
+
+    if (!prediction) {
+      throw new Error("NO_PREDICTION");
     }
 
-    let text = data.result;
-console.log("GEMINI RAW RESPONSE:", text);
-    text = text
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
+    let category = prediction.class;
 
-    const result = JSON.parse(text);
+    // Roboflow 클래스명 → 기존 앱 클래스명 변환
+    if (category === "ALU") {
+      category = "알루미늄 캔";
+    }
 
-  const category = result.category as keyof typeof CATEGORY_ICONS;
+    if (category === "GLASS") {
+      category = "지원하지 않는 품목";
+    }
+
+    category = category as keyof typeof CATEGORY_ICONS;
 
     if (!CATEGORY_ICONS[category]) {
       throw new Error("UNKNOWN_CATEGORY");
