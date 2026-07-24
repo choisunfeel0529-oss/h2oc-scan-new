@@ -20,9 +20,8 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     console.log("ROBOFLOW DATA:", data);
 
-    const prediction =
-      data.result?.predictions?.[0] ??
-      data.predictions?.[0];
+const prediction =
+  data.outputs?.[0]?.predictions?.predictions?.[0];
 
     console.log("PREDICTION:", prediction);
 
