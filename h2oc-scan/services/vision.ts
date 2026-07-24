@@ -20,16 +20,16 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     console.log("ROBOFLOW DATA:", data);
 
-const prediction =
-  data.outputs?.[0]?.predictions?.predictions?.[0];
+const predictionClass =
+  data.outputs?.[0]?.predictions?.predicted_classes?.[0];
 
-    console.log("PREDICTION:", prediction);
+console.log("PREDICTION:", predictionClass);
 
-    if (!prediction) {
-      throw new Error("NO_PREDICTION");
-    }
+if (!predictionClass) {
+  throw new Error("NO_PREDICTION");
+}
 
-    let category = String(prediction.class);
+let category = String(predictionClass);
 
     if (category === "ALU") {
       category = "알루미늄 캔";
