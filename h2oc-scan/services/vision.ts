@@ -21,7 +21,7 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
     console.log("ROBOFLOW DATA:", data);
 
 const predictionClass =
-  data.outputs?.[0]?.predictions?.predicted_classes?.[0];
+  data.result?.outputs?.[0]?.predictions?.predicted_classes?.[0];
 
 console.log("PREDICTION:", predictionClass);
 
