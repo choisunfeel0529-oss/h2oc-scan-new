@@ -46,7 +46,10 @@ export async function POST(req: Request) {
 
     const data = await response.json();
 
-    console.log("ROBOFLOW RESPONSE:", data);
+console.log(
+  "ROBOFLOW RESPONSE:",
+  JSON.stringify(data, null, 2)
+);
 
 
     return NextResponse.json({
