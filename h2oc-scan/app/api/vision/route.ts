@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
 
 const response = await fetch(
-  "https://serverless.roboflow.com/garbage-ng351-k2ppi-2-resnet18-t1",
+  "https://serverless.roboflow.com/s-workspace-kzb59/workflows/garbage-ng351-k2ppi",
       {
         method: "POST",
         headers: {
