@@ -25,7 +25,14 @@ export default function ResultPage() {
   const isUnsupported = result.category === "지원하지 않는 품목";
 
   return (
-    <main className="flex h-full flex-col px-8 py-10">
+<main
+  className="
+    flex h-full flex-col px-8 py-10
+    bg-[url('/bg-paper.png')]
+    bg-cover
+    bg-center
+  "
+>
       <h1 className="text-center text-lg font-semibold text-green-600">AI 분석 완료</h1>
 
       <motion.section
