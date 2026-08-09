@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className="antialiased">
+<body className="antialiased bg-[url('/bg-paper.png')] bg-cover bg-center bg-fixed">
         <MobileFrame>{children}</MobileFrame>
       </body>
     </html>
