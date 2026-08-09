@@ -20,36 +20,56 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     console.log("ROBOFLOW DATA:", data);
 
-const predictionClass =
-  data.result?.outputs?.[0]?.predictions?.predicted_classes?.[0];
+    const predictionClass =
+      data.result?.outputs?.[0]?.predictions?.predicted_classes?.[0];
 
-console.log("PREDICTION:", predictionClass);
+    console.log("PREDICTION:", predictionClass);
 
-if (!predictionClass) {
-  throw new Error("NO_PREDICTION");
-}
+    if (!predictionClass) {
+      throw new Error("NO_PREDICTION");
+    }
 
-let category = String(predictionClass);
+    let category = String(predictionClass);
 
-    if (category === "ALU") {
+    // Roboflow 클래스명 정리
+    if (category.includes("PET")) {
+      category = "PET";
+    } 
+    else if (category.includes("HDPE")) {
+      category = "HDPE";
+    } 
+    else if (category.includes("LDPE")) {
+      category = "LDPE";
+    } 
+    else if (category.includes("PP")) {
+      category = "PP";
+    } 
+    else if (category.includes("PS")) {
+      category = "PS";
+    }
+    else if (category === "ALU") {
       category = "알루미늄 캔";
     }
-
-    if (category === "GLASS") {
+    else if (category === "GLASS") {
       category = "지원하지 않는 품목";
     }
+
 
     const finalCategory =
       category as keyof typeof CATEGORY_ICONS;
 
+
     if (!CATEGORY_ICONS[finalCategory]) {
+      console.error("지원하지 않는 CATEGORY:", category);
       throw new Error("UNKNOWN_CATEGORY");
     }
+
 
     return {
       category: finalCategory,
       icon: CATEGORY_ICONS[finalCategory],
     };
+
 
   } catch (error) {
     console.error("VISION ERROR:", error);
