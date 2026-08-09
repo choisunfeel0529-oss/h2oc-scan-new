@@ -10,8 +10,9 @@ export default function Home() {
   return (
     <main className="flex h-full flex-col items-center justify-center gap-16 px-8">
       <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-        H2OC <span className="text-[#389337]">Scan</span>
-      </h1>
+  H<sub className="text-3xl">2</sub>OC{" "}
+  <span className="text-[#389337]">Scan</span>
+</h1>
 
       <motion.button
         whileHover={{ scale: 1.03 }}
