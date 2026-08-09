@@ -7,9 +7,7 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        image,
-      }),
+      body: JSON.stringify({ image }),
     });
 
     if (!res.ok) {
@@ -20,18 +18,31 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
     console.log("ROBOFLOW DATA:", data);
 
-    const predictionClass =
-      data.result?.outputs?.[0]?.predictions?.predicted_classes?.[0];
 
-    console.log("PREDICTION:", predictionClass);
+    const predictions =
+      data.result?.outputs?.[0]?.predictions?.predictions;
 
-    if (!predictionClass) {
+
+    if (!predictions) {
       throw new Error("NO_PREDICTION");
     }
 
-    let category = String(predictionClass);
 
-    // Roboflow 클래스명 정리
+    // confidence 가장 높은 클래스 선택
+    const bestPrediction = Object.entries(predictions)
+      .sort(
+        (a: any, b: any) =>
+          b[1].confidence - a[1].confidence
+      )[0][0];
+
+
+    console.log("BEST PREDICTION:", bestPrediction);
+
+
+    let category = bestPrediction;
+
+
+    // 클래스명 정리
     if (category.includes("PET")) {
       category = "PET";
     } 
@@ -60,8 +71,12 @@ export async function analyzeImage(image: string): Promise<AnalyzeResult> {
 
 
     if (!CATEGORY_ICONS[finalCategory]) {
-      console.error("지원하지 않는 CATEGORY:", category);
-      throw new Error("UNKNOWN_CATEGORY");
+      console.log("UNSUPPORTED:", category);
+
+      return {
+        category: "지원하지 않는 품목",
+        icon: CATEGORY_ICONS["지원하지 않는 품목"],
+      };
     }
 
 
