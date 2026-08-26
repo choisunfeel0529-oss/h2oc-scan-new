@@ -70,8 +70,7 @@ export default function ResultPage() {
           session.clear();
           router.push("/camera");
         }}
-        className="flex w-full items-center justify-center gap-2 rounded-3xl bg-green-500 py-5 text-lg font-semibold text-white shadow-lg shadow-green-200 transition-colors hover:bg-green-600"
-      >
+className="mx-auto flex w-[85%] items-center justify-center gap-2 rounded-2xl bg-[#389337] py-3.5 text-base font-semibold text-white shadow-md shadow-green-200 transition-colors hover:bg-[#2f7d2e]"
         <RotateCcw className="h-5 w-5" />
         다시 촬영
       </motion.button>
