@@ -54,7 +54,7 @@ export default function ResultPage() {
         {!isUnsupported && (
           <div className="flex flex-col items-center gap-4">
             <p className="text-sm text-gray-500">
-              H2OC 계산기를 이용해 계산해 주세요.
+              H₂OC 계산기를 이용해 계산해 주세요.
             </p>
 
             <a
@@ -63,7 +63,7 @@ export default function ResultPage() {
               rel="noopener noreferrer"
               className="rounded-2xl bg-[#389337] px-6 py-3 text-base font-semibold text-white shadow-md transition-colors hover:bg-[#2f7d2e]"
             >
-              H2OC 계산하러 가기
+              H₂OC 계산하러 가기
             </a>
           </div>
         )}
