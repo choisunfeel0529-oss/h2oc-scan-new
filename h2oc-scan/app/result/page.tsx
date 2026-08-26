@@ -45,9 +45,22 @@ export default function ResultPage() {
         <p className="text-2xl font-bold text-gray-900">
           {isUnsupported ? "지원하지 않는 품목입니다." : `${result.category}입니다.`}
         </p>
-        {!isUnsupported && (
-          <p className="text-sm text-gray-500">H2OC 계산기를 이용해 계산해 주세요.</p>
-        )}
+{!isUnsupported && (
+  <div className="flex flex-col items-center gap-4">
+    <p className="text-sm text-gray-500">
+      H2OC 계산기를 이용해 계산해 주세요.
+    </p>
+
+    <a
+      href="https://62e740fa-b500-4129-bbf4-2dddaac2bcca.vip.gensparksite.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="rounded-2xl bg-[#389337] px-6 py-3 text-base font-semibold text-white shadow-md transition-colors hover:bg-[#2f7d2e]"
+    >
+      H2OC 계산하러 가기
+    </a>
+  </div>
+)}
       </motion.section>
 
       <motion.button
